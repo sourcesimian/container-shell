@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function cosh() {
+    function container_id() {
+        head -1 /proc/self/cgroup | cut -d / -f3
+    }
+
+    case "$1" in
+        "--help")
+            /cosh/help.sh
+            ;;
+        "id")
+            container_id
+            ;;
+        "ip")
+            docker inspect -f "{{ .NetworkSettings.IPAddress }}" "$(container_id)"
+            ;;
+        "image")
+            docker inspect -f "{{ .Config.Image }}" "$(container_id)"
+            ;;
+        *)
+            if [ -n "$1" ]; then
+                "${@}"
+            fi
+            ;;
+    esac
+}
+export -f cosh
+
+

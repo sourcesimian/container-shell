@@ -1,0 +1,4 @@
+
+## CoSH zsh customization
+
+fpath=( /cosh/zfunc "${fpath[@]}" )

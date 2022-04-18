@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "[CoSH] Running without sudo: ${@}" >&2
+exec "${@}"
