@@ -3,7 +3,7 @@ Container Shell Pattern<!-- omit in toc -->
 
 ***A template project for building your own containerised toolset***
 
-Too often I've seen a team member detoured because some tooling they need is not yet installed, is too tricky or time consuming to setup right now, is the wrong version, or has broken. To me this is an insanity of inefficiency, since at that same point in time that tooling is sure to already be installed and available on another team member's machine. Further is is not uncommon to see tooling behaving differently on different machines, which can result in diversions from the task at hand. These detours are needless wasted time. The *Container Shell Pattern* is a team tooling technique to overcome these inefficiencies, improve tooling consistency and facilitate immediate team wide access to tooling.
+Too often I've seen a team member detoured because some tooling they need is not yet installed, is too tricky or time consuming to setup right now, is the wrong version, or has broken. To me this is an insanity of inefficiency, since at that same point in time that tooling is sure to already be installed and available on another team member's machine. Further it is not uncommon to see tooling behaving differently on different machines, which can result in diversions from the task at hand. These detours are needless wasted time. The *Container Shell Pattern* is a team tooling technique to overcome these inefficiencies, improve tooling consistency and facilitate immediate team wide access to tooling.
 
 This [project is a working example](https://github.com/sourcesimian/container-shell) as a starting point to building your own container shell.
 
@@ -187,3 +187,7 @@ This single standard environment variable can then be used as an anchor from whi
             env | grep -e ... -e '^MYTEAM_'
 ```
 The expectation would be that all team members set the value of `MYTEAM_ROOT` in their environment.
+
+---
+
+The Container Shell Pattern is very much an open pattern. One which a team can adopt and shape for their own needs, with the focus on consistent and easily distributable tool sets, to improve the efficiency of your operations. The implementation of such capability can vary significantly, and perhaps might not even make use of containerisation technology. I however hope that this pattern, and the working example, inspires you to consider how you and your team can mitigate these pernicious everyday inefficiencies so that we can do more of our best work and have more fun doing it.
