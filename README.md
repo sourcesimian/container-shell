@@ -35,6 +35,7 @@ This [project is a working example](https://github.com/sourcesimian/container-sh
   - [User Environment Variables](#user-environment-variables)
     - [Multiple Tool Versions](#multiple-tool-versions)
     - [Team Source Root Directory](#team-source-root-directory)
+  - [Utility Scripts](#utility-scripts)
 
 # Pattern
 Tooling can be separated into two primary groups *system* and *user*. The *user* grouping can be broadly classified as anything that is different for each user, this includes identity, authorisation, environment customisations, utility scripts, and in progress source. The *system* grouping is all the binaries, packages, modules and tool chains that get installed. The *Container Shell Pattern* aims to simplify access to the *system* group by achieving the following goals.
@@ -187,6 +188,13 @@ This single standard environment variable can then be used as an anchor from whi
             env | grep -e ... -e '^MYTEAM_'
 ```
 The expectation would be that all team members set the value of `MYTEAM_ROOT` in their environment.
+
+## Utility Scripts
+From my experience, rather do not bake your utility scripts into your container shell, unless they are very static. It prevents tweaking which is often beneficial in further development. Rather, agree amongst your team to add some location above `MYTEAM_ROOT` to your executable search path, e.g.:
+```
+export PATH=$MYTEAM_ROOT/util-repo/bin:$PATH
+```
+That way your utils are not bound to your container shell. And you are also able to run your utility scripts in different toolchain environments, be it the local machine, virtual environents or different container shell images.
 
 ---
 
