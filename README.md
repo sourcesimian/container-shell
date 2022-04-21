@@ -27,6 +27,7 @@ This [project is a working example](https://github.com/sourcesimian/container-sh
     - [Different User Names](#different-user-names)
     - [Exposing Ports](#exposing-ports)
     - [Attaching to an Existing Shell](#attaching-to-an-existing-shell)
+    - [Selecting the Container Shell Image](#selecting-the-container-shell-image)
     - [Choosing the Shell Interpreter](#choosing-the-shell-interpreter)
   - [Root Permissions](#root-permissions)
     - [Full User Setup](#full-user-setup)
@@ -137,6 +138,10 @@ COSH_PORTS=8080,8443 cosh ...
 ### Attaching to an Existing Shell
 By default each container shell runs as a separate container, however should you wish to reenter a specific container this template provides a helper. From inside the shell `cosh id` will provide the container Id. And then setting the `COSH_ID` will instruct the launcher script to `exec` into that container rather than `run`'ing a new one.
 
+
+### Selecting the Container Shell Image
+The `cosh` launcher stub will default to launching the same image which it was installed from. However, the image can be overridden by setting the `COSH_IMAGE` environment varible.
+
 ### Choosing the Shell Interpreter
 By default this template will run as `bash` however it is possible to set the default shell interpreter as `zsh` by setting the `COSH_SHELL` environment variable. 
 
@@ -146,7 +151,7 @@ To improve shell support follow `COSH_SHELL` through from [entrypoint.sh](https:
 ## Root Permissions
 A container shell is built as a generic non-user specific container, specifically because it is intended as a team wide solution that is easy to install and use. When the container is launched, code in [entrypoint.sh](https://github.com/sourcesimian/container-shell/blob/main/docker/cosh/entrypoint.sh) will perform  some user specific customisations. But a container shell is specifically run with the user's permissions, to provide the seamless user experience and also because running containers as root is genrally a bad idea. Thus the user permissions are insufficient for some of the necessary setup operations.
 
-To resolve tis several setup executables are compiled at Docker build time, set as owned by root and the `setuid` flag set, so that when run they can elevate permissions and make the necessary changes.
+To resolve this several setup executables are compiled at Docker build time, set as owned by root and the `setuid` flag set, so that when run they can elevate permissions and make the necessary changes.
 
 ### Full User Setup
 [setupuser.c](https://github.com/sourcesimian/container-shell/blob/main/docker/setupuser.c) is used to provide a full user setup for tools such as `id` and `ssh`, e.g.:
@@ -194,7 +199,7 @@ From my experience, rather do not bake your utility scripts into your container 
 ```
 export PATH=$MYTEAM_ROOT/util-repo/bin:$PATH
 ```
-That way your utils are not bound to your container shell. And you are also able to run your utility scripts in different toolchain environments, be it the local machine, virtual environents or different container shell images.
+That way your utils are not bound to your container shell. And you are also able to run your utility scripts in different toolchain environments, be it the local machine, virtual environments or different container shell images.
 
 ---
 
